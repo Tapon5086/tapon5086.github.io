@@ -1,0 +1,61 @@
+// ---- Config ----
+const CONTACT_EMAIL = ""; // <- add your email later like "tapon@example.com"
+const CONTACT_URL = "https://www.linkedin.com/in/tapon-paul-174267351/";
+
+// Theme handling
+const root = document.documentElement;
+const THEME_KEY = "simple-portfolio-theme";
+
+function setTheme(mode) {
+  if (mode === "light") {
+    root.classList.add("light");
+  } else {
+    root.classList.remove("light");
+  }
+  localStorage.setItem(THEME_KEY, mode);
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved) {
+    setTheme(saved);
+  } else {
+    const prefersLight = window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: light)").matches;
+    setTheme(prefersLight ? "light" : "dark");
+  }
+})();
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const isLight = root.classList.contains("light");
+  setTheme(isLight ? "dark" : "light");
+});
+
+// Mobile nav toggle
+const navToggle = document.getElementById("navToggle");
+const menu = document.getElementById("menu");
+navToggle.addEventListener("click", () => {
+  const open = menu.classList.toggle("open");
+  navToggle.setAttribute("aria-expanded", String(open));
+});
+
+// Year in footer
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Contact form -> email if provided, else LinkedIn
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const name = (document.getElementById("name").value || "").trim();
+  const email = (document.getElementById("email").value || "").trim();
+  const message = (document.getElementById("message").value || "").trim();
+
+  if (CONTACT_EMAIL) {
+    const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  } else {
+    // Fallback: open LinkedIn profile to message you there
+    window.open(CONTACT_URL, "_blank", "noopener");
+  }
+  return false;
+}
