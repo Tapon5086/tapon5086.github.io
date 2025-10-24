@@ -22,8 +22,7 @@ function setTheme(mode) {
   if (saved) {
     setTheme(saved);
   } else {
-    const prefersLight = window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: light)").matches;
+    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
     setTheme(prefersLight ? "light" : "dark");
   }
 })();
@@ -48,6 +47,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
 // Contact form handling -> email if provided, else LinkedIn
 function handleContactSubmit(e) {
   e.preventDefault();
+
   const name = (document.getElementById("name").value || "").trim();
   const email = (document.getElementById("email").value || "").trim();
   const message = (document.getElementById("message").value || "").trim();
@@ -61,27 +61,6 @@ function handleContactSubmit(e) {
     // Fallback: open LinkedIn profile to message you there
     window.open(CONTACT_URL, "_blank", "noopener");
   }
+
   return false;
 }
-
-// Handle the "Dataset" link clicks (if applicable)
-function handleDatasetLink() {
-  window.open("https://data.mendeley.com/datasets/w8sr775pjb/5", "_blank", "noopener");
-}
-
-// Handle the "Research Article" link clicks (if applicable)
-function handleResearchLink() {
-  window.open("https://doi.org/10.1016/j.dib.2025.112174", "_blank", "noopener");
-}
-
-// Event listener for Dataset and Research Article links
-document.getElementById("datasetLink").addEventListener("click", handleDatasetLink);
-document.getElementById("researchLink").addEventListener("click", handleResearchLink);
-
-// Mobile nav toggle (for better accessibility and visibility)
-const mobileNavToggle = document.getElementById("navToggle");
-const mobileMenu = document.getElementById("menu");
-mobileNavToggle.addEventListener("click", () => {
-  const menuIsOpen = mobileMenu.classList.toggle("open");
-  mobileNavToggle.setAttribute("aria-expanded", String(menuIsOpen));
-});
