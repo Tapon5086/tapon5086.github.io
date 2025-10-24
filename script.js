@@ -6,6 +6,7 @@ const CONTACT_URL = "https://www.linkedin.com/in/tapon-paul-174267351/";
 const root = document.documentElement;
 const THEME_KEY = "simple-portfolio-theme";
 
+// Set theme (light/dark)
 function setTheme(mode) {
   if (mode === "light") {
     root.classList.add("light");
@@ -15,6 +16,7 @@ function setTheme(mode) {
   localStorage.setItem(THEME_KEY, mode);
 }
 
+// Initialize theme based on localStorage or system preferences
 (function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
   if (saved) {
@@ -26,12 +28,13 @@ function setTheme(mode) {
   }
 })();
 
+// Event listener for theme toggle button
 document.getElementById("themeToggle").addEventListener("click", () => {
   const isLight = root.classList.contains("light");
   setTheme(isLight ? "dark" : "light");
 });
 
-// Mobile nav toggle
+// Mobile navigation toggle
 const navToggle = document.getElementById("navToggle");
 const menu = document.getElementById("menu");
 navToggle.addEventListener("click", () => {
@@ -39,10 +42,10 @@ navToggle.addEventListener("click", () => {
   navToggle.setAttribute("aria-expanded", String(open));
 });
 
-// Year in footer
+// Set the current year in the footer dynamically
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Contact form -> email if provided, else LinkedIn
+// Contact form handling -> email if provided, else LinkedIn
 function handleContactSubmit(e) {
   e.preventDefault();
   const name = (document.getElementById("name").value || "").trim();
@@ -50,6 +53,7 @@ function handleContactSubmit(e) {
   const message = (document.getElementById("message").value || "").trim();
 
   if (CONTACT_EMAIL) {
+    // If an email is provided, create a mailto link
     const subject = encodeURIComponent(`Portfolio contact from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
@@ -59,3 +63,25 @@ function handleContactSubmit(e) {
   }
   return false;
 }
+
+// Handle the "Dataset" link clicks (if applicable)
+function handleDatasetLink() {
+  window.open("https://data.mendeley.com/datasets/w8sr775pjb/5", "_blank", "noopener");
+}
+
+// Handle the "Research Article" link clicks (if applicable)
+function handleResearchLink() {
+  window.open("https://doi.org/10.1016/j.dib.2025.112174", "_blank", "noopener");
+}
+
+// Event listener for Dataset and Research Article links
+document.getElementById("datasetLink").addEventListener("click", handleDatasetLink);
+document.getElementById("researchLink").addEventListener("click", handleResearchLink);
+
+// Mobile nav toggle (for better accessibility and visibility)
+const mobileNavToggle = document.getElementById("navToggle");
+const mobileMenu = document.getElementById("menu");
+mobileNavToggle.addEventListener("click", () => {
+  const menuIsOpen = mobileMenu.classList.toggle("open");
+  mobileNavToggle.setAttribute("aria-expanded", String(menuIsOpen));
+});
