@@ -1,11 +1,10 @@
+// Your original JS remains 100% unchanged — just paste it back as is
 // ---- Config ----
 const CONTACT_EMAIL = ""; // <- add your email later like "tapon@example.com"
 const CONTACT_URL = "https://www.linkedin.com/in/tapon-paul-174267351/";
-
 // Theme handling
 const root = document.documentElement;
 const THEME_KEY = "simple-portfolio-theme";
-
 // Set theme (light/dark)
 function setTheme(mode) {
   if (mode === "light") {
@@ -15,7 +14,6 @@ function setTheme(mode) {
   }
   localStorage.setItem(THEME_KEY, mode);
 }
-
 // Initialize theme based on localStorage or system preferences
 (function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
@@ -26,13 +24,11 @@ function setTheme(mode) {
     setTheme(prefersLight ? "light" : "dark");
   }
 })();
-
 // Event listener for theme toggle button
 document.getElementById("themeToggle").addEventListener("click", () => {
   const isLight = root.classList.contains("light");
   setTheme(isLight ? "dark" : "light");
 });
-
 // Mobile navigation toggle
 const navToggle = document.getElementById("navToggle");
 const menu = document.getElementById("menu");
@@ -40,18 +36,14 @@ navToggle.addEventListener("click", () => {
   const open = menu.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", String(open));
 });
-
 // Set the current year in the footer dynamically
 document.getElementById("year").textContent = new Date().getFullYear();
-
 // Contact form handling -> email if provided, else LinkedIn
 function handleContactSubmit(e) {
   e.preventDefault();
-
   const name = (document.getElementById("name").value || "").trim();
   const email = (document.getElementById("email").value || "").trim();
   const message = (document.getElementById("message").value || "").trim();
-
   if (CONTACT_EMAIL) {
     // If an email is provided, create a mailto link
     const subject = encodeURIComponent(`Portfolio contact from ${name}`);
@@ -61,6 +53,5 @@ function handleContactSubmit(e) {
     // Fallback: open LinkedIn profile to message you there
     window.open(CONTACT_URL, "_blank", "noopener");
   }
-
   return false;
 }
